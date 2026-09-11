@@ -33,11 +33,35 @@ def merchant_encounter (player_stats):
         print("The Merchant: heres my prices...")
 def lBandit_encounter (player_stats,resource_types):
     bandits=random.randint(1,10)
-    print("*",bandits,"low level bandits approach you, guns in hand\n HEY! - one of them shouts *",time.sleep(1),"THERES A FEE TO PASS")
-    choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence"))
+    print("*",bandits,"low level bandits approach you, guns in hand\n HEY! - one of them shouts *")
+    time.sleep(2)
+    print("The Bandits: THERES A FEE TO PASS!")
+    time.sleep(2)
+    choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence\n"))
     match choice:
         case 1:
             resource_fee=[random.choice(resource_types)]
+            time.sleep(2)
             print("The Bandit: We're chargin ya some of your",resource_fee)
+            time.sleep(2)
+            print("The Bandit: Lets say...", random.randint(1,50),"of your",resource_fee)
+        case 2:
+            if player_stats["rep"]==10:
+                print("The Bandits: Oh... you're The Leader.")
+                time.sleep(2)
+                print("The Bandits: Sorry for bothering ya... go ahead")
+            else:
+                print("The Bandits: Who do you think you are. Pay up, now.")
+        case 3:
+            print("*You command your group to open fire on the bandits*")
+            coinflip=random.randint(1,2)
+            if coinflip==1:
+                time.sleep(2)
+                print("*Luck is not on your side... You take casualties*")
+                print("*As you walk away, you leave the corpse of 4 of your members...*\n")
+                player_stats["group"] -= 4
+                print("*",player_stats["group"],"members left *")
+            else:
+                print("Luck seems to be on your side, you suffer no casualties")
 
 lBandit_encounter(player_stats,resource_types)
