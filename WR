@@ -1,14 +1,18 @@
 import time
 import random
 titleCard="""
-[0;94;40m▄▄▄▄▄▄[0;37;40m  [0;94;40m▄▄▄▄▄[0;37;40m  [0;94;40m▄▄▄▄▄[0;37;40m [0;94;40m▄▄▄▄▄▄▄▄[0;37;40m [0;94;40m▄▄▄▄▄▄▄▄[0;37;40m   [0;94;40m▄▄▄▄▄[0;37;40m [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m              [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m      [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m   [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m [0;94;40m▄▄▄▄▄▄▄▄▄▄▄▄[0;37;40m    [0m
-[0;37;40m [0;34;40m▀██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;44m▄[0;94;40m▀[0;37;40m   [0;34;40m██[0;94;44m▄[0;94;40m▀[0;37;40m  [0;34;40m▀██[0;94;44m▄▄[0;94;40m▀[0;37;40m   [0;34;40m▀██[0;94;44m▄[0;34;40m▀██[0;94;40m█[0;37;40m  [0;34;40m██[0;94;44m▄[0;94;40m▀[0;37;40m   [0;34;40m▀▀▀▀▀██[0;94;44m▄[0;34;40m▀▀▀▀▀█[0;94;40m█[0;37;40m  [0;34;40m▀██[0;94;44m▄[0;34;40m▀▀▀▀▀▀▀▀▀█[0;94;40m█[0;37;40m  [0;34;40m▀██[0;94;44m▄[0;34;40m▀▀▀▀▀███[0;94;44m▀█[0;37;40m             [0;34;40m▀██[0;94;44m▄[0;34;40m▀▀▀▀▀███[0;94;44m▀█[0;37;40m  [0;34;40m▄████▀▀▀▀▀▀███[0;94;44m▀[0;94;40m▄[0;37;40m  [0;34;40m▀██[0;94;44m▄[0;34;40m▀▀▀▀▀▀██[0;94;44m▄[0;94;40m▀[0;37;40m   [0;34;40m▀██[0;94;44m▄[0;34;40m▀▀▀▀███[0;94;44m▀▀[0;94;40m▄[0;37;40m [0m
-[0;37;40m  [0;34;40m██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;44m█[0;37;40m      [0;34;40m██[0;94;44m█[0;37;40m  [0;34;40m█[0;94;40m█[0;37;40m  [0;34;40m██[0;94;40m█[0;37;40m         [0;34;40m██[0;94;44m█[0;37;40m      [0;94;40m▀[0;37;40m   [0;34;40m██[0;94;44m█[0;37;40m     [0;94;40m▄[0;37;40m    [0;94;40m▀[0;37;40m   [0;34;40m██[0;94;44m█[0;37;40m       [0;34;40m███[0;94;40m█[0;37;40m             [0;34;40m██[0;94;44m█[0;37;40m       [0;34;40m███[0;94;40m█[0;37;40m [0;34;40m██[0;94;44m▄[0;34;40m▀[0;37;40m        [0;34;40m▀██[0;94;40m█[0;37;40m   [0;34;40m██[0;94;44m█[0;37;40m      [0;34;40m██[0;94;40m█[0;37;40m     [0;34;40m██[0;94;44m█[0;37;40m      [0;34;40m▀██[0;94;44m▀[0;94;40m▄[0m
-[0;37;40m  [0;34;40m██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;40m█[0;37;40m    [0;34;40m██[0;94;44m▀[0;37;40m      [0;34;40m██[0;94;44m█[0;37;40m  [0;34;40m█[0;94;40m█[0;37;40m  [0;34;40m██[0;94;40m█[0;37;40m         [0;34;40m██[0;94;40m█[0;37;40m          [0;34;40m███[0;94;44m▀▀▀▀▀[0;94;40m█[0;37;40m        [0;34;40m██[0;94;44m▀[0;94;40m▄[0;34;40m▄▄▄▄████[0;94;44m█[0;37;40m              [0;34;40m██[0;94;44m▀[0;94;40m▄[0;34;40m▄▄▄▄████[0;94;44m█[0;37;40m  [0;34;40m██[0;94;44m█[0;37;40m          [0;34;40m██[0;94;40m█[0;37;40m   [0;34;40m██[0;94;44m▀[0;94;40m▄[0;34;40m▄▄▄▄▄██[0;94;44m█[0;37;40m     [0;34;40m██[0;94;44m█[0;37;40m       [0;34;40m███[0;94;40m█[0m
-[0;37;40m  [0;34;40m███[0;94;44m▀[0;94;40m▄[0;34;40m▄███[0;94;44m▀[0;94;40m▄[0;34;40m▄▄███[0;94;40m█[0;37;40m    [0;34;40m██[0;94;44m▄[0;37;40m      [0;34;40m██[0;94;44m█[0;37;40m  [0;34;40m█[0;94;44m▀[0;94;40m▄[0;37;40m [0;34;40m██[0;94;40m█[0;37;40m         [0;34;40m██[0;94;44m█[0;37;40m          [0;34;40m██[0;94;44m█[0;37;40m     [0;94;40m▀[0;37;40m   [0;94;40m▄█[0;37;40m   [0;34;40m██[0;94;44m▄[0;34;40m▀▀████[0;94;44m▄[0;34;40m▀[0;37;40m                [0;34;40m██[0;94;44m▄[0;34;40m▀▀████[0;94;44m▄[0;34;40m▀[0;37;40m    [0;34;40m███[0;94;44m▀[0;94;40m▄[0;37;40m      [0;34;40m▄███[0;94;40m█[0;37;40m   [0;34;40m██[0;94;44m▄[0;34;40m▀▀▀▀▀▀██[0;94;40m█[0;37;40m     [0;34;40m██[0;94;44m█[0;37;40m    [0;34;40m▄▄███[0;94;44m█[0;37;40m [0m
-[0;37;40m   [0;34;40m▀▀████▀▀█████▀▀[0;37;40m   [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m  [0;34;40m▄███[0;94;44m█[0;37;40m  [0;34;40m▀██████[0;94;44m▀[0;94;40m▄[0;37;40m     [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m      [0;34;40m▄████[0;94;44m▀ [0;34;40m████████[0;94;40m█[0;37;40m [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m  [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m           [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m  [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m  [0;34;40m▀████████████▀[0;37;40m  [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m  [0;34;40m▄████[0;94;44m▀[0;94;40m▄[0;37;40m [0;34;40m▄███[0;34;44m [0;94;44m▀[0;34;40m██████▀▀[0;37;40m  [0m
+    ███        ▄█    █▄       ▄████████       ▄█     █▄   ▄█  ███▄▄▄▄       ███        ▄████████    ▄████████         ▄████████  ▄██████▄     ▄████████ ████████▄  
+▀█████████▄   ███    ███     ███    ███      ███     ███ ███  ███▀▀▀██▄ ▀█████████▄   ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▀███ 
+   ▀███▀▀██   ███    ███     ███    █▀       ███     ███ ███▌ ███   ███    ▀███▀▀██   ███    █▀    ███    ███        ███    ███ ███    ███   ███    ███ ███    ███ 
+    ███   ▀  ▄███▄▄▄▄███▄▄  ▄███▄▄▄          ███     ███ ███▌ ███   ███     ███   ▀  ▄███▄▄▄      ▄███▄▄▄▄██▀       ▄███▄▄▄▄██▀ ███    ███   ███    ███ ███    ███ 
+    ███     ▀▀███▀▀▀▀███▀  ▀▀███▀▀▀          ███     ███ ███▌ ███   ███     ███     ▀▀███▀▀▀     ▀▀███▀▀▀▀▀        ▀▀███▀▀▀▀▀   ███    ███ ▀███████████ ███    ███ 
+    ███       ███    ███     ███    █▄       ███     ███ ███  ███   ███     ███       ███    █▄  ▀███████████      ▀███████████ ███    ███   ███    ███ ███    ███ 
+    ███       ███    ███     ███    ███      ███ ▄█▄ ███ ███  ███   ███     ███       ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▄███ 
+   ▄████▀     ███    █▀      ██████████       ▀███▀███▀  █▀    ▀█   █▀     ▄████▀     ██████████   ███    ███        ███    ███  ▀██████▀    ███    █▀  ████████▀  
+                                                                                                   ███    ███        ███    ███                                    
 """
 print(titleCard)
+time.sleep(2)
 
 resource_types=["food","ammo","fuel"]
 player_stats={
@@ -24,18 +28,27 @@ player_stats={
     "rep":5
     } #these are the players current stats, all of these can change within their range
 
-def merchant_encounter (player_stats):
-    print("The Merchant: Whadya buyin?")
+def merchant_encounter (player_stats,resource_types):
+    print("* A lone merchant shuffles down the road towards you... *")
     time.sleep(2)
-    if player_stats["rep"]==0:
-        print("The Merchant: Yeah we know who you are. Get Out.\n *You Leave Emptyhanded...*")
-    else:
-        print("The Merchant: heres my prices...")
-def lBandit_encounter (player_stats,resource_types):
+    choice=int(input("* Approach the Merchant? *\n 1.Lets see what he has for us          2.Not today\n"))
+    match choice:
+        case 1:
+            print("* As your group rests for a bit you approach the merchant *")
+            time.sleep(2)
+            print("The Merchant: Greetings...")
+            if player_stats["rep"]==0:
+                print("The Merchant: The Road knows who you are. Disappear from my sight.")
+            else:
+        case 2:
+            print("* The merchant shuffles away, murmuring to himself*")
+            time.sleep(2)
+            print("The Merchant: man these guys are broke...")
+def bandit_encounter (player_stats,resource_types):
     bandits=random.randint(1,10)
-    print("*",bandits,"low level bandits approach you, guns in hand\n HEY! - one of them shouts *")
+    print("*",bandits,"low level bandits approach you, guns in hand *")
     time.sleep(2)
-    print("The Bandits: THERES A FEE TO PASS!")
+    print("The Bandits: HEY! THERES A FEE TO PASS!")
     time.sleep(2)
     choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence\n"))
     match choice:
@@ -44,7 +57,7 @@ def lBandit_encounter (player_stats,resource_types):
             time.sleep(2)
             print("The Bandit: We're chargin ya some of your",resource_fee)
             time.sleep(2)
-            print("The Bandit: Lets say...", random.randint(1,50),"of your",resource_fee)
+            print("The Bandit: Lets say...", random.randint(10,50),"of your",resource_fee)
         case 2:
             if player_stats["rep"]==10:
                 print("The Bandits: Oh... you're The Leader.")
@@ -57,11 +70,20 @@ def lBandit_encounter (player_stats,resource_types):
             coinflip=random.randint(1,2)
             if coinflip==1:
                 time.sleep(2)
-                print("*Luck is not on your side... You take casualties*")
-                print("*As you walk away, you leave the corpse of 4 of your members...*\n")
+                print("* Luck is not on your side... You take casualties *")
+                time.sleep(2)
+                print("* As you walk away, you leave the corpse of 4 of your members... *")
                 player_stats["group"] -= 4
+                time.sleep(2)
                 print("*",player_stats["group"],"members left *")
+                time.sleep(2)
             else:
+                time.sleep(2)
                 print("Luck seems to be on your side, you suffer no casualties")
+                time.sleep(2)
+                print("-10 ammo")
+                time.sleep(2)
+                player_stats["current_ammo"] -= 10
+                print(player_stats["current_ammo"],"left")
 
-lBandit_encounter(player_stats,resource_types)
+merchant_encounter (player_stats,resource_types)
