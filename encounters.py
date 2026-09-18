@@ -1,18 +1,5 @@
 import time
 import random
-def gameover(player_stats):
-    if player_stats[""]
-def coinFlip():
-    coin=["heads","tails"]
-    side=random.choice(coin)
-    player_side=input("Choose a side. Heads or Tails?\n")
-    player_side=player_side.lower()
-    if player_side==side:
-        return ("Pass")
-
-    else:
-        return ("Fail")
-resource_types=["food","ammo","fuel"]
 player_stats={
     "max_food":400,
     "current_food":400,
@@ -20,14 +7,32 @@ player_stats={
     "current_ammo":400,
     "max_fuel":400,
     "current_fuel":400,
-    "members":5,
+    "members":50,
     "trust":100,
     "morale":100,
     "rep":5
     }
+def gameover(player_stats):
+    if player_stats["members"]<=0:
+        print("* The final member of your group has perished*")
+        time.sleep(2)
+        print("* You have led your team to their death... *")
+        time.sleep(2)
+def coinFlip():
+    coin=["heads","tails"]
+    side=random.choice(coin)
+    player_side=input("Choose a side. Heads or Tails?\n")
+    player_side=player_side.lower()
+    if player_side==side:
+        return "Pass"
+
+    else:
+        return "Fail"
+resource_types=["food","ammo","fuel"]
+
 def bandit_encounter (player_stats,resource_types):
     bandits=random.randint(1,10)
-    print("*",bandits,"low level bandits approach you, guns in hand *")
+    print("*",bandits,"low level bandit(s) approach you, guns in hand *")
     time.sleep(2)
     print("The Bandits: HEY! THERES A FEE TO PASS!")
     time.sleep(2)
@@ -37,7 +42,7 @@ def bandit_encounter (player_stats,resource_types):
             resource_fee=[random.choice(resource_types)]
             print("The Bandit: We're chargin ya some of your",resource_fee)
             time.sleep(2)
-            fee={resource_fee: random.randint(10,50)}
+            fee=[random.randint(10,50),resource_fee]
             print("The Bandit: Lets say...",fee)
             player_stats[resource_fee]-=resource_fee
 
