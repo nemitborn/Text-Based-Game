@@ -1,14 +1,11 @@
 import time
 import random
 player_stats={
-    "max_food":400,
     "current_food":400,
-    "max_ammo":400,
     "current_ammo":400,
-    "max_fuel":400,
     "current_fuel":400,
     "members":50,
-    "trust":100,
+    "trust":10,
     "morale":100,
     "rep":5
     }
@@ -17,7 +14,8 @@ def gameover(player_stats):
         print("* The final member of your group has perished*")
         time.sleep(2)
         print("* You have led your team to their death... *")
-        time.sleep(2)
+        time.sleep(60)
+        exit()
 def coinFlip():
     coin=["heads","tails"]
     side=random.choice(coin)
@@ -57,29 +55,46 @@ def bandit_encounter (player_stats,resource_types):
                     print("The Bandits: Man you're good at reasoning...")
                 time.sleep(2)
                 print("The Bandits: I guess we can make an exception for you... go on through")
-            else:
+            elif coinFlip()=="Fail":
                 print("FAIL")
+                time.sleep(2)
                 print("The Bandits: Who do you think you are?")
                 time.sleep(2)
-                print("-10 ammo, -2 members")
-                time.sleep(2)
-                player_stats["current_ammo"] -= 10
-                player_stats["members"] -= 2
-                print("*",player_stats["members"],"members left... *")
+                if player_stats["current_ammo"]>=10:
+                    player_stats["current_ammo"] -= 10
+                    player_stats["members"] -= 2
+                    gameover(player_stats)
+                    print("-10 ammo, -2 members")
+                    time.sleep(2)
+                    print("*",player_stats["members"],"members left... *")
+                else:
+                    print("-10 members")
         case 3:
-            print("*You command your group to open fire on the bandits*")
-            if coinFlip()=="Pass":
-                print("PASS")
-                time.sleep(2)
-                print("* You take no casualties, it seems these were just lowly bandits *")
+            if player_stats["current_ammo"]>=20:
+                print("*You command your group to open fire on the bandits*")
+                if coinFlip()=="Pass":
+                    print("PASS")
+                    time.sleep(2)
+                    print("* You take no casualties, it seems these were just lowly bandits *")
+                else:
+                    print("FAIL")
+                    time.sleep(2)
+                    print("* You take casualties, 4 of your members are lost to these lowly bandits... *")
+                    time.sleep(2)
+                    print("-20 ammo         -4 members")
+                    player_stats["current_ammo"] -= 20
+                    player_stats["members"] -= 4
+                    time.sleep(2)
+                    print("*",player_stats["members"],"member(s) left... *")
             else:
-                print("FAIL")
+                print("* You command your group to charge at the bandits... *")
                 time.sleep(2)
-                print("* You take casualties, 4 of your members are lost to these lowly bandits... *")
+                print("* You begin to remember an old saying from before all of this *")
                 time.sleep(2)
-                print("-20 ammo         -4 members")
-                player_stats["current_ammo"] -= 20
-                player_stats["members"] -= 4
+                print("* Dont bring fists to a gun fight *")
+                player_stats["members"] -= 10
+                gameover(player_stats)
                 time.sleep(2)
-                print("*",player_stats["members"],"member(s) left... *")
+                print("* You loose 10 of your members. You can feel their distrust in you... *")
+                player_stats["trust"] -= 2
 bandit_encounter(player_stats,resource_types)
