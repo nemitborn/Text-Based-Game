@@ -1,4 +1,6 @@
 import time
+import encounters
+
 titleCard="""
     ███        ▄█    █▄       ▄████████       ▄█     █▄   ▄█  ███▄▄▄▄       ███        ▄████████    ▄████████         ▄████████  ▄██████▄     ▄████████ ████████▄  
 ▀█████████▄   ███    ███     ███    ███      ███     ███ ███  ███▀▀▀██▄ ▀█████████▄   ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▀███ 
@@ -10,6 +12,19 @@ titleCard="""
    ▄████▀     ███    █▀      ██████████       ▀███▀███▀  █▀    ▀█   █▀     ▄████▀     ██████████   ███    ███        ███    ███  ▀██████▀    ███    █▀  ████████▀  
                                                                                                    ███    ███        ███    ███                                    
 """
+days=0
+num_encounters=0
+
+def day_check(num_encounters,days):
+    if num_encounters%3==0:
+        days+=1
+
+
+
+
+
+
+
 print(titleCard)
 time.sleep(2)
 def tutorial():
@@ -25,14 +40,16 @@ def tutorial():
     time.sleep(2)
     print("Get it wrong and your group faces consequences, get it right and you'll get a favourable outcome")
     time.sleep(2)
-input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n")
-time.sleep(2)
-if "Yes"or"yes"or"y"or"ues":
+choice=input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n")
+time.sleep(1)
+if choice.startswith("y") or choice.endswith("es"):
     tutorial()
-    repeat=("You got all that? or do you need me to repeat it again")
-    while repeat=="Yes"or"yes"or"y"or"ues":
+    choice=input("You got all that? or do you need me to repeat it again\n")
+    while choice==choice.startswith("y") or choice.endswith("es"):
         print("listen up well this time...")
-        time.sleep(3)
+        time.sleep(2)
         tutorial()
-    else:
-        print("cool")
+else:
+    print("pshh okay you lil expert")
+
+
