@@ -2,7 +2,7 @@ import time
 import random
 from playsound3 import playsound
 player_stats={
-    "current_food":10,
+    "current_food":1,
     "current_ammo":100,
     "current_fuel":40,
     "members":1,
@@ -11,6 +11,8 @@ player_stats={
     "rep":5
     }
 resource_types=["food","ammo","fuel"]
+
+#regular procedures
 def gameover(player_stats):
     if player_stats["members"]<=0:
         print("* The final member of your group has perished*")
@@ -28,6 +30,8 @@ def coinFlip():
 
     else:
         return "Fail"
+
+#negative encounters
 def bandit_encounter (player_stats,resource_types):
     bandits=random.randint(1,10)
     print("* some low level bandits approach you, guns in hand *")
@@ -164,7 +168,7 @@ def creature(player_stats):
     match choice:
         case 1:
             time.sleep(2)
-            if player_stats["curent_food"]>=10:
+            if player_stats["current_food"]>=10:
                 player_stats["current_food"]-=10
                 print("* You throw some food at the beast... *")
                 time.sleep(2)
@@ -198,7 +202,7 @@ def creature(player_stats):
             if player_stats["current_ammo"]>=10:
                 if coinFlip()=="Pass":
                     print("PASS")
-                    playsound("sound/gun1.mp3")
+                    playsound("sounds/gun1.mp3")
                     print("* You command your group to shoot at the beast... *")
                     time.sleep(2)
                     print("* it seems to run away in fear back into the trees... *")
@@ -207,7 +211,7 @@ def creature(player_stats):
                     print("FAIL")
                     playsound("sounds/gun1.mp3")
                     print("* You command your group to shoot at the beast... *")
-                    playsound("sound/gun2.mp3")
+                    playsound("sounds/gun2.mp3")
                     print("* As you shoot the beast you see it pouncing on your members... *")
                     player_stats["members"]-=3
                     gameover(player_stats)
@@ -215,4 +219,80 @@ def creature(player_stats):
                     player_stats["morale"]-=1
                     print("* The group seems to loose their fighting spirit even more... *")
 
-creature(player_stats)
+#neutral encounters
+def blockade(player_stats):
+    print("* As your group marches through the snow, you come across a blockade... *")
+    time.sleep(2)
+    print("* It seems to be a bunch of cars and rubble, stacked upon each other... *")
+    choice = int(input("What do you do?\n 1. Go around          2. Maybe this is a sign to rest for a bit          3. Target Practice (REQS AMMO)\n"))
+    match choice:
+        case 1:
+            if coinFlip()=="Pass":
+                print("PASS")
+                time.sleep(2)
+                print("* Even though your group was convinced it was an ambush, turns out you're safe... *")
+                time.sleep(2)
+                print("* The group seems to trust you a little more now *")
+                player_stats["trust"]+=1
+            else:
+                print("* A group of bandits were waiting to ambush your group *")
+                if player_stats["current_ammo"]>=30:
+                    time.sleep(2)
+                    print("* Your group raises their guns and begins to fire *")
+                    playsound("sounds/gun1.mp3")
+                    if coinFlip()=="Pass":
+                        print("PASS")
+                        time.sleep(2)
+                        print("* Your group effortlessly takes the bandits down and defends themselves... *")
+                        player_stats["current_ammo"]-=30
+                        time.sleep(2)
+                        print("-30 ammo")
+                    else:
+                        print("FAIL")
+                        time.sleep(2)
+                        print("* Your group fights their hardest but they still take casualties... *")
+                        player_stats["members"]-=5
+                        gameover(player_stats)
+                        time.sleep(2)
+                        print("-20 ammo")
+                        print("*",player_stats["members"],"member(s) left... *")
+        case 2:
+            if player_stats["current_fuel"]>=10:
+                print("* Your group decides to take a well needed rest... *")
+                time.sleep(2)
+                print("* They start a big fire to heat themselves up *")
+                time.sleep(2)
+                print("-10 fuel")
+                player_stats["current_fuel"]-=10
+                player_stats["morale"]+=1
+            else:
+                print("* Your group decides to rest, however there's no fuel to burn *")
+                player_stats["members"]-=1
+                time.sleep(2)
+                print("* It seems one of the weaker members has fallen to frostbite *")
+                time.sleep(2)
+        case 3:
+            if player_stats["current_ammo"]>=50:
+                print("* One of your group members grabs their gun and shoots the cars out of rage... *")
+                playsound("sounds/gun2.mp3")
+                print("* Others begin to join in... *")
+                playsound("sounds/gun1.mp3")
+                if coinFlip()=="Pass":
+                    print("PASS")
+                    time.sleep(2)
+                    print("* One of the bullets strikes the fuel tank of the cars... *")
+                    time.sleep(2)
+                    print("* A subtle spark turns the entire barricade into a fireball... *")
+                    time.sleep(2)
+                    print("* As your group cheers at the wreckage they caused, you can feel their fighting spirits ignite once more *")
+                    print("* -40 ammo *")
+                    player_stats["current_ammo"]-=40
+                    player_stats["morale"]+=1
+                else:
+                    print("* As the gun fire dies down, the first shooter realises hes been shooting an empty gun for a while now... *")
+                    time.sleep(2)
+                    print("* You manage to calm them down and decide to just walk around the blockade... *")
+                    player_stats["current_ammo"]-=30
+                    player_stats["morale"]-=1
+                    print("* The group's fighting sprit seems to die down just a little bit... *")
+#positive encounters
