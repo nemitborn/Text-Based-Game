@@ -18,7 +18,9 @@ def gameover(player_stats):
         print("* The final member of your group has perished*")
         time.sleep(2)
         print("* You have led your team to their death... *")
-        time.sleep(60)
+        time.sleep(2)
+        print("MEMENTO MORI")
+        time.sleep(5)
         exit()
 def coinFlip():
     coin=["heads","tails"]
@@ -32,7 +34,7 @@ def coinFlip():
         return "Fail"
 
 #negative encounters
-def bandit_encounter (player_stats,resource_types):
+def bandit_encounter (player_stats):
     bandits=random.randint(1,10)
     print("* some low level bandits approach you, guns in hand *")
     time.sleep(2)
@@ -41,13 +43,14 @@ def bandit_encounter (player_stats,resource_types):
     choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence\n"))
     match choice:
         case 1:
-            resource_fee=[random.choice(resource_types)]
+            resource_fee=random.choice(resource_types)
+            fee_price=random.randint(10, 50)
             print("The Bandit: We're chargin ya some of your",resource_fee)
             time.sleep(2)
-            fee=[random.randint(10,50),resource_fee]
-            print("The Bandit: Lets say...",fee)
-            player_stats[resource_fee]-=resource_fee
-
+            print("The Bandit: Lets say...",fee_price,resource_fee)
+            player_stats[resource_fee]-=fee_price
+            time.sleep(2)
+            print("-",fee_price,resource_fee)
         case 2:
             if coinFlip()=="Pass":
                 if bandits<player_stats["members"]:
@@ -108,7 +111,7 @@ def bandit_encounter (player_stats,resource_types):
                 print("*",player_stats["members"],"member(s) left... *")
 def storm(player_stats):
     print("* As your group marches you feel a storm starting to pick up *")
-    time.sleep(2)
+    time.sleep(2)#ADD STORM SFX
     choice=int(input("* What do you do?\n 1.Command your group to push through the storm          2.Maybe we should rest and wait for the storm to subside...\n"))
     match choice:
         case 1:
@@ -132,6 +135,7 @@ def storm(player_stats):
                 print("* They decide it would be better to just rest and wait for the storm *")
                 time.sleep(2)
                 if player_stats["fuel"] >= 40:
+                    #ADD FIRE SFX
                     print("* You end up using a bit more fuel than needed to survive that storm... *")
                     player_stats["fuel"] -= 40
                 else:
@@ -141,6 +145,7 @@ def storm(player_stats):
                     gameover(player_stats)
                     player_stats["morale"] -= 1
                     print("* The storm ends and you leave a some of your group behind... *")
+                    #ADD STORM SFX
                     time.sleep(2)
                     print("*", player_stats["members"], "member(s) left... *")
                     time.sleep(2)
@@ -150,10 +155,11 @@ def storm(player_stats):
             time.sleep(2)
             if player_stats["fuel"]>=40:
                 print("* You end up using a bit more fuel than needed to survive that storm... *")
+                #FIRE SFX
                 player_stats["fuel"]-=40
             else:
                 print("* As you rest you realise you dont have much fuel left, some of your members are sure to freeze in this storm... *")
-                time.sleep(2)
+                time.sleep(2) #STORM SFX
                 player_stats["members"]-=10
                 gameover(player_stats)
                 player_stats["morale"]-=1
@@ -163,7 +169,7 @@ def storm(player_stats):
                 print("* You can feel the group are loosing their fighting spirit... *")
 def creature(player_stats):
     print("* As your group takes a short rest, one of them hears the low snarl of something in the trees... *")
-    time.sleep(2)
+    playsound("sounds/creature.mp3")
     choice=int(input("What do you do?\n 1. Feed the beast          2. Try to run          3. Last Resort, violence\n"))
     match choice:
         case 1:
@@ -296,7 +302,7 @@ def blockade(player_stats):
                     player_stats["morale"]-=1
                     print("* The group's fighting sprit seems to die down just a little bit... *")
 #positive encounters
-def supply(player_stats,resource_types):
+def supply(player_stats):
     print("* As you stumble through the snow, you come across a large crate with a parachute attached... *")
     time.sleep(2)
     print("* As your group surrounds it its clear there's a a few supplies around the crash site... *")
@@ -322,5 +328,3 @@ def supply(player_stats,resource_types):
         time.sleep(2)
     print("+ 20 ammo")
     player_stats["ammo"]-=20
-
-supply(player_stats,resource_types)
