@@ -1,5 +1,6 @@
 import time
 import encounters
+import random
 
 titleCard="""
     ███        ▄█    █▄       ▄████████       ▄█     █▄   ▄█  ███▄▄▄▄       ███        ▄████████    ▄████████         ▄████████  ▄██████▄     ▄████████ ████████▄  
@@ -12,18 +13,16 @@ titleCard="""
    ▄████▀     ███    █▀      ██████████       ▀███▀███▀  █▀    ▀█   █▀     ▄████▀     ██████████   ███    ███        ███    ███  ▀██████▀    ███    █▀  ████████▀  
                                                                                                    ███    ███        ███    ███                                    
 """
-days=0
-num_encounters=0
+player_stats=encounters.player_stats
+resource_types=encounters.resource_types
 
-def day_check(num_encounters,days):
-    if num_encounters%3==0:
-        days+=1
-
-
-
-
-
-
+encounter_pool = [
+    encounters.bandit_encounter,
+    encounters.storm,
+    encounters.creature,
+    encounters.blockade,
+    encounters.supply,
+]
 
 print(titleCard)
 time.sleep(2)
@@ -51,5 +50,21 @@ if choice.startswith("y") or choice.endswith("es"):
         tutorial()
 else:
     print("pshh okay you lil expert")
-
-
+time.sleep(2)
+for day in range(0, 20):
+    print("DAY",day,"/ 20")
+    time.sleep(2)
+    for i in range(0,3):
+        encounter=random.choice(encounter_pool)
+        encounter(player_stats)
+        time.sleep(2)
+    print("DAY", day, "COMPLETE")
+    time.sleep(2)
+    print("* You remind yourself that you need to rest and feed your group... *")
+    player_stats["food"]-=player_stats["members"]
+    player_stats["fuel"]-=20
+    time.sleep(2)
+    print("-",player_stats["members"],"food         - 20 fuel")
+    time.sleep(2)
+    print(player_stats)
+    time.sleep(2)
