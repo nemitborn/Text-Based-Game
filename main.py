@@ -1,31 +1,16 @@
 import time
 import encounters
 import random
-
-titleCard="""
-    ███        ▄█    █▄       ▄████████       ▄█     █▄   ▄█  ███▄▄▄▄       ███        ▄████████    ▄████████         ▄████████  ▄██████▄     ▄████████ ████████▄  
-▀█████████▄   ███    ███     ███    ███      ███     ███ ███  ███▀▀▀██▄ ▀█████████▄   ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▀███ 
-   ▀███▀▀██   ███    ███     ███    █▀       ███     ███ ███▌ ███   ███    ▀███▀▀██   ███    █▀    ███    ███        ███    ███ ███    ███   ███    ███ ███    ███ 
-    ███   ▀  ▄███▄▄▄▄███▄▄  ▄███▄▄▄          ███     ███ ███▌ ███   ███     ███   ▀  ▄███▄▄▄      ▄███▄▄▄▄██▀       ▄███▄▄▄▄██▀ ███    ███   ███    ███ ███    ███ 
-    ███     ▀▀███▀▀▀▀███▀  ▀▀███▀▀▀          ███     ███ ███▌ ███   ███     ███     ▀▀███▀▀▀     ▀▀███▀▀▀▀▀        ▀▀███▀▀▀▀▀   ███    ███ ▀███████████ ███    ███ 
-    ███       ███    ███     ███    █▄       ███     ███ ███  ███   ███     ███       ███    █▄  ▀███████████      ▀███████████ ███    ███   ███    ███ ███    ███ 
-    ███       ███    ███     ███    ███      ███ ▄█▄ ███ ███  ███   ███     ███       ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▄███ 
-   ▄████▀     ███    █▀      ██████████       ▀███▀███▀  █▀    ▀█   █▀     ▄████▀     ██████████   ███    ███        ███    ███  ▀██████▀    ███    █▀  ████████▀  
-                                                                                                   ███    ███        ███    ███                                    
-"""
-player_stats=encounters.player_stats
-resource_types=encounters.resource_types
-
-encounter_pool = [
-    encounters.bandit_encounter,
-    encounters.storm,
-    encounters.creature,
-    encounters.blockade,
-    encounters.supply,
-]
-
-print(titleCard)
-time.sleep(2)
+def age_check():
+    age=int(input("Enter your age..."))
+    if age>=16:
+        print("WARNING - This game contains loud sounds, mentions of gun violence and death.")
+        print(titleCard)
+        time.sleep(2)
+    else:
+        print("You're not allowed to play this game.")
+        time.sleep(5)
+        exit()
 def tutorial():
     print("WINTER ROAD is a text based game where you will need to guide your group and manage your resources whilst traveling across The Road")
     time.sleep(2)
@@ -39,9 +24,31 @@ def tutorial():
     time.sleep(2)
     print("Get it wrong and your group faces consequences, get it right and you'll get a favourable outcome")
     time.sleep(2)
+titleCard="""
+    ███        ▄█    █▄       ▄████████       ▄█     █▄   ▄█  ███▄▄▄▄       ███        ▄████████    ▄████████         ▄████████  ▄██████▄     ▄████████ ████████▄  
+▀█████████▄   ███    ███     ███    ███      ███     ███ ███  ███▀▀▀██▄ ▀█████████▄   ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▀███ 
+   ▀███▀▀██   ███    ███     ███    █▀       ███     ███ ███▌ ███   ███    ▀███▀▀██   ███    █▀    ███    ███        ███    ███ ███    ███   ███    ███ ███    ███ 
+    ███   ▀  ▄███▄▄▄▄███▄▄  ▄███▄▄▄          ███     ███ ███▌ ███   ███     ███   ▀  ▄███▄▄▄      ▄███▄▄▄▄██▀       ▄███▄▄▄▄██▀ ███    ███   ███    ███ ███    ███ 
+    ███     ▀▀███▀▀▀▀███▀  ▀▀███▀▀▀          ███     ███ ███▌ ███   ███     ███     ▀▀███▀▀▀     ▀▀███▀▀▀▀▀        ▀▀███▀▀▀▀▀   ███    ███ ▀███████████ ███    ███ 
+    ███       ███    ███     ███    █▄       ███     ███ ███  ███   ███     ███       ███    █▄  ▀███████████      ▀███████████ ███    ███   ███    ███ ███    ███ 
+    ███       ███    ███     ███    ███      ███ ▄█▄ ███ ███  ███   ███     ███       ███    ███   ███    ███        ███    ███ ███    ███   ███    ███ ███   ▄███ 
+   ▄████▀     ███    █▀      ██████████       ▀███▀███▀  █▀    ▀█   █▀     ▄████▀     ██████████   ███    ███        ███    ███  ▀██████▀    ███    █▀  ████████▀  
+                                                                                                   ███    ███        ███    ███                                    
+"""
+player_stats=encounters.player_stats
+resource_types=encounters.resource_types
+encounter_pool = [
+    encounters.bandit_encounter,
+    encounters.storm,
+    encounters.creature,
+    encounters.blockade,
+    encounters.supply,
+]
+
+age_check()
 choice=input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n")
-time.sleep(1)
 if choice.startswith("y") or choice.endswith("es"):
+    time.sleep(2)
     tutorial()
     choice=input("You got all that? or do you need me to repeat it again\n")
     while choice==choice.startswith("y") or choice.endswith("es"):
