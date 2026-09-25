@@ -169,7 +169,6 @@ def storm(player_stats):
                 print("* You can feel the group are loosing their fighting spirit... *")
 def creature(player_stats):
     print("* As your group takes a short rest, one of them hears the low snarl of something in the trees... *")
-    playsound("sounds/creature.mp3")
     choice=int(input("What do you do?\n 1. Feed the beast          2. Try to run          3. Last Resort, violence\n"))
     match choice:
         case 1:
@@ -328,3 +327,33 @@ def supply(player_stats):
         time.sleep(2)
     print("+ 20 ammo")
     player_stats["ammo"]-=20
+def speech(player_stats):
+    print("* As your group marches through the snow, you can tell their morale is low... *")
+    time.sleep(2)
+    print("* You turn around and raise your hand to halt them. *")
+    time.sleep(2)
+    print("* The wind blows from behind you as you stand in front of all your group *")
+    time.sleep(2)
+    print("* You open your mouth to say something... *")
+    time.sleep(2)
+    choice=int(input("What do you say?\n1. A speech to encourage their spirits          2. A speech that strengthens your bond with them           3. A speech that reminds them what they are fighting for"))
+    match choice:
+        case 1:
+            print("*morale speech idk edit this later*")
+        case 2:
+            print("trust speech idk edit this later")
+        case 3:
+            if coinFlip()=="Pass":
+                print("PASS")
+                time.sleep(2)
+                print("morale and trust speech idk edit this later")
+            else:
+                print("FAIL")
+                time.sleep(2)
+                print("* The wind continues to blow as none of your group speaks up... *")
+                time.sleep(2)
+                print("* It seems as if the speech hasn't resonated with anyone in the group... *")
+                time.sleep(2)
+                print("* As you lower your hand and turn around to continue to march, one small though digs into your head... *")
+                time.sleep(2)
+                print("* 'Tough crowd huh...' *")a
