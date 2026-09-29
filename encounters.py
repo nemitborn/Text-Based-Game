@@ -12,109 +12,118 @@ player_stats={
     }
 resource_types=["food","ammo","fuel"]
 
-#regular procedures
+#freq used processes
 def gameover(player_stats):
-    if player_stats["members"]<=0:
+    if player_stats["members"]<=0:      #Checks if the player has 0 or less than 0 members in their group
         print("* The final member of your group has perished*")
-        time.sleep(2)
+        time.sleep(1)
         print("* You have led your team to their death... *")
-        time.sleep(2)
-        print("MEMENTO MORI")
+        time.sleep(1)
+        print("MEMENTO MORI")           #cool quote
         time.sleep(5)
         exit()
 def coinFlip():
     coin=["heads","tails"]
     side=random.choice(coin)
     player_side=input("Choose a side. Heads or Tails?\n")
-    player_side=player_side.lower()
+    player_side=player_side.lower()         #makes sure the correct side is chosen regardless of capitalization
     if player_side==side:
         return "Pass"
 
     else:
         return "Fail"
+def random_loot(player_stats):
+    supply_loot = random.choice(resource_types)
+    supply_amount = random.randint(40, 80)
+    time.sleep(1)
+    print("* Inside you find", supply_amount, supply_loot, "*")
+    player_stats[supply_loot] += supply_amount
+    time.sleep(1)
+    print("+", supply_amount, supply_loot)
 
 #negative encounters
 def bandit_encounter (player_stats):
     bandits=random.randint(1,10)
     print("* some low level bandits approach you, guns in hand *")
-    time.sleep(2)
+    time.sleep(1)
     print("The Bandits: HEY! THERES A FEE TO PASS!")
-    time.sleep(2)
+    time.sleep(1)
     choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence\n"))
     match choice:
-        case 1:
+        case 1:        #Pay the fee
             resource_fee=random.choice(resource_types)
             fee_price=random.randint(10, 50)
             print("The Bandit: We're chargin ya some of your",resource_fee)
-            time.sleep(2)
+            time.sleep(1)
             print("The Bandit: Lets say...",fee_price,resource_fee)
             player_stats[resource_fee]-=fee_price
-            time.sleep(2)
+            time.sleep(1)
             print("-",fee_price,resource_fee)
-        case 2:
+        case 2:        #Reason
             if coinFlip()=="Pass":
                 if bandits<player_stats["members"]:
                     print("PASS")
+                    time.sleep(1)
                     print("* The Bandits hear you out and realise they're outnumbered *")
                 else:
                     print("PASS")
-                    time.sleep(2)
+                    time.sleep(1)
                     print("The Bandits: Man you're good at reasoning...")
-                time.sleep(2)
+                time.sleep(1)
                 print("The Bandits: I guess we can make an exception for you... go on through")
             elif coinFlip()=="Fail":
                 print("FAIL")
-                time.sleep(2)
+                time.sleep(1)
                 print("The Bandits: Who do you think you are?")
-                time.sleep(2)
+                time.sleep(1)
                 playsound("sounds/gun2.mp3")
                 if player_stats["ammo"]>=10:
                     player_stats["ammo"] -= 10
                     player_stats["members"] -= 2
                     gameover(player_stats)
                     print("-10 ammo, -2 members")
-                    time.sleep(2)
+                    time.sleep(1)
                     print("*",player_stats["members"],"members left... *")
                 else:
                     print("-10 members")
                     gameover(player_stats)
-        case 3:
+        case 3:         #Fight
             if player_stats["ammo"]>=20:
                 playsound("sounds/gun1.mp3")
                 print("*You command your group to open fire on the bandits*")
                 if coinFlip()=="Pass":
                     print("PASS")
-                    time.sleep(2)
+                    time.sleep(1)
                     print("* You take no casualties, it seems these were just lowly bandits *")
                 else:
                     print("FAIL")
-                    time.sleep(2)
+                    time.sleep(1)
                     print("* You take casualties, 4 of your members are lost to these lowly bandits... *")
-                    time.sleep(2)
+                    time.sleep(1)
                     print("-20 ammo         -4 members")
                     player_stats["ammo"] -= 20
                     player_stats["members"] -= 4
-                    time.sleep(2)
+                    time.sleep(1)
                     print("*",player_stats["members"],"member(s) left... *")
             else:
                 print("* You command your group to charge at the bandits... *")
-                time.sleep(2)
+                time.sleep(1)
                 print("* You begin to remember an old saying from before all of this *")
-                time.sleep(2)
+                time.sleep(1)
                 print("* Dont bring fists to a gun fight *")
                 player_stats["members"] -= 10
                 gameover(player_stats)
-                time.sleep(2)
+                time.sleep(1)
                 print("* You loose 10 of your members. You can feel their distrust in you... *")
                 player_stats["trust"] -= 2
-                time.sleep(2)
+                time.sleep(1)
                 print("*",player_stats["members"],"member(s) left... *")
 def storm(player_stats):
     print("* As your group marches you feel a storm starting to pick up *")
     time.sleep(2)#ADD STORM SFX
     choice=int(input("* What do you do?\n 1.Command your group to push through the storm          2.Maybe we should rest and wait for the storm to subside...\n"))
     match choice:
-        case 1:
+        case 1:         #Push
             if player_stats["trust"]>=5:
                 if coinFlip()=="Pass" and player_stats["food"]>=10:
                     print("PASS")
@@ -192,7 +201,7 @@ def creature(player_stats):
         case 2:
             time.sleep(2)
             if coinFlip()=="Pass":
-                print("*  Your group outruns the beast, seems like it was injured... *")
+                print("* Your group outruns the beast, seems like it was injured... *")
             else:
                 print("* Most of your group outruns the beast, however there are some that got left behind and eaten... *")
                 player_stats["members"]-=5
@@ -311,13 +320,7 @@ def supply(player_stats):
         print("PASS")
         time.sleep(2)
         print("* Through all your efforts, the crate finally lifts open... *")
-        supply_loot=random.choice(resource_types)
-        supply_amount=random.randint(40,80)
-        time.sleep(2)
-        print("* Inside you find",supply_amount,supply_loot,"*")
-        player_stats[supply_loot]+=supply_amount
-        time.sleep(2)
-        print("+",supply_amount,supply_loot)
+        random_loot(player_stats)
     else:
         print("FAIL")
         time.sleep(2)
@@ -354,6 +357,25 @@ def speech(player_stats):
                 time.sleep(2)
                 print("* It seems as if the speech hasn't resonated with anyone in the group... *")
                 time.sleep(2)
-                print("* As you lower your hand and turn around to continue to march, one small though digs into your head... *")
+                print("* As you lower your hand and turn around to continue to march, one small thought digs into your head... *")
                 time.sleep(2)
-                print("* 'Tough crowd huh...' *")a
+                print("* 'Tough crowd huh...' *")
+def sing(player_stats):
+    print("* As your group marches, the wind begins to howl... *")
+    time.sleep(2)
+    print("* The sounds of the winds and the sounds of walking combine and sound eerily similar to a popular song before all of this... *")
+    time.sleep(2)
+    print("* To pass the time, one of your group members begins to sing that very song... *")
+    time.sleep(2)
+    print("* More and more people join in, and soon, everyone is singing... *")
+    time.sleep(2)
+    player_stats["morale"]+=1
+    print("+1 morale")
+def cart(player_stats):
+    print("* As your group continues on their journey, you come a crashed wooden cart... *")
+    time.sleep(2)
+    print("* It seems as if the wheel has came off. Whoever drove it took whatever he could hold and ran off... *")
+    time.sleep(2)
+    print("* Maybe its best if we just take what they left behind, not like they're using it anyways... *")
+    time.sleep(2)
+    random_loot(player_stats)
