@@ -10,21 +10,21 @@ player_stats={
     "members":50,
     "trust":6,
     "morale":5,
-    "rep":10
+    "rep":5
     }
 resource_types=["food","ammo","fuel"]
 
 #non encounters but still processes
 def random_loot(player_stats):
-    supply_loot = random.choice(resource_types)
-    supply_amount = random.randint(40, 80)
+    supply_loot = random.choice(resource_types) #chooses a random type of resource from resource_types
+    supply_amount = random.randint(40, 80)     #chooses a random number in between 40 and 80 to give to the player
     time.sleep(1)
-    print("* Inside you find", supply_amount, supply_loot, "*")
-    player_stats[supply_loot] += supply_amount
+    print("* Inside you find", supply_amount, supply_loot, "*") #notifies the player that they found the loot
+    player_stats[supply_loot] += supply_amount      #Adds it to their stats
     time.sleep(1)
     print("+", supply_amount, supply_loot)
 def clear_screen():
-    # cls on Windows, clear on Mac/Linux. os.name tells us which OS we're on.
+    # clears the screen
     os.system("cls" if os.name == "nt" else "clear")
 def merchant_shop(player_stats):
     print("* The merchant lays out their goods... *")
@@ -33,43 +33,43 @@ def merchant_shop(player_stats):
         print("\n--- Merchant's Shop ---")
         for stat in resource_types:
             print(stat.capitalize() + ": " + str(player_stats[stat]))
-        print("\nTrade rate: 3 of one resource for 1 of another")
+        print("\nTrade rate: 10 of one resource for 8 of another")      #Like an exchange rate with currencies
         choice = input("What would you like to do?\n 1. Make a trade          2. Leave the shop\n")
-
         if choice == "1":
             give = input("What do you want to give up? (food, ammo, fuel)\n").lower()
             get = input("What do you want in return? (food, ammo, fuel)\n").lower()
-
             if give not in resource_types or get not in resource_types:
-                print("* The merchant doesn't recognise one of those... *")
+                print("* The Merchant: Aha.. Im afraid I dont have that in stock. But you're welcome to pick something else... *")
                 continue
             if give == get:
                 print("* The merchant laughs at you... *")
+                time.sleep(1)
+                print("*The Merchant: Aha, a jokester I see. Alright now, lets do some actual trading *")
                 continue
             if player_stats[give] < 3:
                 print("* You don't have enough " + give + " to make that trade... *")
                 continue
 
-            player_stats[give] -= 3
-            player_stats[get] += 1
-            print("* You trade 3 " + give + " for 1 " + get + " *")
+            player_stats[give]-=10
+            player_stats[get]+=8
+            print("* You trade 10 " + give + " for 8 " + get + " *")
             time.sleep(1)
         else:
             print("* You thank the merchant and continue on your way... *")
             break
-def gameover(player_stats):
+def gameover(player_stats):     #This is a function that checks if the player has less or equal to 0 members in their group
     if player_stats["members"]<=0:
         print("* The final member of your group has perished*")
         time.sleep(1)
         print("* You have led your team to their death... *")
         time.sleep(1)
-        print("MEMENTO MORI")
+        print("MEMENTO MORI")       #cool quote
         time.sleep(5)
         exit()
-def coinFlip():
+def coinFlip():     #The coin flip used in many situations
     coin=["heads","tails"]
     side=random.choice(coin)
-    player_side=input("Choose a side. Heads or Tails?\n")
+    player_side=input("Choose a side. Heads or Tails?\n>> ")
     player_side=player_side.lower()
     if player_side==side:
         return "Pass"
@@ -84,7 +84,7 @@ def bandit_encounter (player_stats):
     time.sleep(1)
     print("The Bandits: HEY! THERES A FEE TO PASS!")
     time.sleep(1)
-    choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence\n"))
+    choice=int(input("What do you do?\n 1. Pay the Fee          2. Try to reason with them          3. Last Resort, violence\n>> "))
     match choice:
         case 1:        #Pay the fee
             resource_fee=random.choice(resource_types)
@@ -155,14 +155,13 @@ def bandit_encounter (player_stats):
                 time.sleep(1)
                 print("*",player_stats["members"],"member(s) left... *")
 def storm(player_stats):
-    clear_screen()
     print("* As your group marches you feel a storm starting to pick up *")
     time.sleep(1)#ADD STORM SFX
-    choice=int(input("* What do you do?\n 1.Command your group to push through the storm          2.Maybe we should rest and wait for the storm to subside...\n"))
+    choice=int(input("* What do you do?\n 1.Command your group to push through the storm          2.Maybe we should rest and wait for the storm to subside...\n>> "))
     match choice:
         case 1:
-            if player_stats["trust"]>=5:
-                if coinFlip()=="Pass" and player_stats["food"]>=10:
+            if player_stats["trust"]>=5:    #If trust is below 5, the group won't listen to the player
+                if coinFlip()=="Pass" and player_stats["food"]>=10:     #checks if the player has enough food/energy for their group to make it through the storm
                     print("PASS")
                     time.sleep(1)
                     print("* It took a while and a little bit of extra food but your group managed to push through... *")
@@ -173,19 +172,21 @@ def storm(player_stats):
                     player_stats["members"]-=5
                     gameover(player_stats)
                     print("*", player_stats["members"], "members left... *")
-                    player_stats["morale"] -= 1
+                    time.sleep(1)
                     player_stats["trust"] -= 1
+                    print("-1 trust")
+                    time.sleep(1)
                     print("* You can start to hear the angry whispers of the group behind you... *")
             else:
                 print("* The group starts to murmur... they do not trust your leadership in this. *")
                 time.sleep(1)
                 print("* They decide it would be better to just rest and wait for the storm *")
                 time.sleep(1)
-                if player_stats["fuel"] >= 40:
+                if player_stats["fuel"] >= 40:      #a lot of fuel used
                     #ADD FIRE SFX
                     print("* You end up using a bit more fuel than needed to survive that storm... *")
                     player_stats["fuel"] -= 40
-                else:
+                else:   #if the player has no fuel to rest in the storm, people die
                     print("* As you rest you realise you dont have much fuel left, some of your members are sure to freeze in this storm... *")
                     time.sleep(1)
                     player_stats["members"] -= 10
@@ -204,6 +205,12 @@ def storm(player_stats):
                 print("* You end up using a bit more fuel than needed to survive that storm... *")
                 #FIRE SFX
                 player_stats["fuel"]-=40
+                time.sleep(1)
+                print("* The group is fully rested and able to march on for a good while now... *")
+                time.sleep(1)
+                player_stats["trust"] += 1
+                player_stats["morale"] += 1
+                print("+1 trust         +1 morale")
             else:
                 print("* As you rest you realise you dont have much fuel left, some of your members are sure to freeze in this storm... *")
                 time.sleep(1) #STORM SFX
@@ -215,10 +222,9 @@ def storm(player_stats):
                 time.sleep(1)
                 print("* You can feel the group are loosing their fighting spirit... *")
 def creature(player_stats):
-    clear_screen()
     print("* As your group takes a short rest, one of them hears the low snarl of something in the trees... *")
-    playsound("sounds/creature.mp3")
-    choice=int(input("What do you do?\n 1. Feed the beast          2. Try to run          3. Last Resort, violence\n"))
+    #playsound("sounds/creature.mp3")
+    choice=int(input("What do you do?\n 1. Feed the beast          2. Try to run          3. Last Resort, violence\n>> "))
     match choice:
         case 1:
             time.sleep(1)
@@ -282,11 +288,10 @@ def creature(player_stats):
 
 #neutral encounters
 def blockade(player_stats):
-    clear_screen()
     print("* As your group marches through the snow, you come across a blockade... *")
     time.sleep(1)
     print("* It seems to be a bunch of cars and rubble, stacked upon each other... *")
-    choice = int(input("What do you do?\n 1. Go around          2. Maybe this is a sign to rest for a bit          3. Target Practice (REQS AMMO)\n"))
+    choice = int(input("What do you do?\n 1. Go around          2. Maybe this is a sign to rest for a bit          3. Target Practice (REQS AMMO)\n>> "))
     match choice:
         case 1:
             if coinFlip()=="Pass":
@@ -372,25 +377,24 @@ def blockade(player_stats):
                 time.sleep(1)
                 print("* You decide to just walk around instead... *")
 def merchant_encounter(player_stats):
-    clear_screen()
     print("* In the distance you spot a lone figure with a heavily laden sled... *")
     time.sleep(1)
-    approach = input("Do you want to approach the merchant? (y/n)\n").lower()
+    approach = input("Do you want to approach the merchant? (y/n)\n>> ").lower()
     if not approach.startswith("y"):
         print("* You decide to keep your distance and move on... *")
         return
     time.sleep(1)
     if player_stats["rep"] < 4:
-        print("The Merchant: I don't like the look of you. Get lost.")
+        print("The Merchant: The Road knows who you are. Get lost...")
         return
-    print("The Merchant: Welcome, welcome. Looking to trade?")
+    print("The Merchant: Aha, welcome.... Looking to trade?")
     time.sleep(1)
-    choice = input("What do you do?\n 1. Open shop          2. Steal from the merchant          3. Quit\n")
+    choice = input("What do you do?\n 1. Open shop          2. Steal from the merchant          3. Quit\n>> ")
     match choice:
         case "1":
             merchant_shop(player_stats)
         case "2":
-            print("* You try to sneak off with some of the merchant's goods... *")
+            print("* Whilst you are bargaining with the merchant, one of your members sneaks around and grabs some of his loot*")
             time.sleep(1)
             if coinFlip() == "Pass":
                 print("PASS")
@@ -398,11 +402,16 @@ def merchant_encounter(player_stats):
             else:
                 print("FAIL")
                 time.sleep(1)
-                print("* The merchant catches you red-handed and shoves you off *")
+                print("* The merchant catches them red-handed *")
+                time.sleep(1)
+                print("The Merchant: HEY! PUT THAT BACK!")
                 player_stats["ammo"] -= 1
+                playsound("sounds/gun2.mp3")
                 player_stats["rep"] -= 2
                 time.sleep(1)
-                print("-1 ammo          -2 rep")
+                print("-1 ammo")
+                time.sleep(1)
+                print("* You feel as if you've commited a great sin, how can anyone look at you the same... *")
         case "3":
             print("* You decide against it and walk away... *")
 #positive encounters
@@ -428,33 +437,39 @@ def supply(player_stats):
     player_stats["ammo"]-=20
 def speech(player_stats):
     print("* As your group marches through the snow, you can tell their morale is low... *")
-    time.sleep(2)
+    time.sleep(1)
     print("* You turn around and raise your hand to halt them. *")
-    time.sleep(2)
+    time.sleep(1)
     print("* The wind blows from behind you as you stand in front of all your group *")
-    time.sleep(2)
+    time.sleep(1)
     print("* You open your mouth to say something... *")
-    time.sleep(2)
-    choice=int(input("What do you say?\n1. A speech to encourage their spirits          2. A speech that strengthens your bond with them           3. A speech that reminds them what they are fighting for"))
+    time.sleep(1)
+    choice=int(input("What do you say?\n1. A speech to encourage their spirits          2. A speech that strengthens your bond with them           3. A speech that reminds them what they are fighting for\n>>  "))
     match choice:
         case 1:
-            print("*morale speech idk edit this later*")
+            print("* The speech riles your group up, you feel their fighting spirit ignite once more... *")
+            time.sleep(1)
+            print("+1 Morale")
+            player_stats["morale"]+=1
         case 2:
-            print("trust speech idk edit this later")
+            print("* The speech reaches the hearts of many of your members, you feel as if they are your real family now.. *")
+            time.sleep(1)
+            print("+1 Trust")
+            player_stats["trust"]+=1
         case 3:
             if coinFlip()=="Pass":
                 print("PASS")
                 time.sleep(2)
-                print("morale and trust speech idk edit this later")
+                print("The speech strikes the soul of your entire group. Their loyalty can be felt through the air")
             else:
                 print("FAIL")
-                time.sleep(2)
+                time.sleep(1)
                 print("* The wind continues to blow as none of your group speaks up... *")
-                time.sleep(2)
+                time.sleep(1)
                 print("* It seems as if the speech hasn't resonated with anyone in the group... *")
-                time.sleep(2)
+                time.sleep(1)
                 print("* As you lower your hand and turn around to continue to march, one small thought digs into your head... *")
-                time.sleep(2)
+                time.sleep(1)
                 print("* 'Tough crowd huh...' *")
 def sing(player_stats):
     print("* As your group marches, the wind begins to howl... *")
