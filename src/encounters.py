@@ -46,10 +46,10 @@ def merchant_shop(player_stats):    #a seperate function for the merchant shop
                 print("* The merchant laughs at you... *")
                 time.sleep(1)
                 print("*The Merchant: Aha, a jokester I see. Alright now, lets do some actual trading *")
-                continue
+                continue    #loops back to the start
             if player_stats[give] < 3:  #if the player does not have enough to trade
                 print("* You don't have enough ",give," to make that trade... *")
-                continue
+                continue    #loops back to the start
 
             player_stats[give]-=10
             player_stats[get]+=8
@@ -59,7 +59,7 @@ def merchant_shop(player_stats):    #a seperate function for the merchant shop
             print("* You thank the merchant and continue on your way... *")
             break
 def gameover(player_stats):     #This is a function that checks if the player has less or equal to 0 members in their group
-    if player_stats["members"]<=0:
+    if player_stats["members"]<=0:  #if the player has 0 or fewer members, else do nothing
         print("* The final member of your group has perished*")
         time.sleep(1)
         print("* You have led your team to their death... *")
@@ -68,12 +68,12 @@ def gameover(player_stats):     #This is a function that checks if the player ha
         time.sleep(5)
         print("MEMENTO MORI")       #cool quote
         time.sleep(2)
-        exit()
+        exit()  #close the game
 def coinFlip():     #The coin flip used in many situations
     coin=["heads","tails"]      #two sides of the coin
     side=random.choice(coin)    #picks a random side
     player_side=input("Choose a side. Heads or Tails?\n>> ")
-    player_side=player_side.lower() #
+    player_side=player_side.lower() #turns the player's input into lower case
     if player_side==side:
         return "Pass"
 
@@ -83,7 +83,7 @@ def coinFlip():     #The coin flip used in many situations
 #negative encounters
 def bandit_encounter (player_stats):
     bandits=random.randint(1,10)
-    print("* some low level bandits approach you, guns in hand *")
+    print("*",bandits,"low level bandits approach you, guns in hand *")
     time.sleep(1)
     print("The Bandits: HEY! THERES A FEE TO PASS!")
     time.sleep(1)
@@ -98,13 +98,15 @@ def bandit_encounter (player_stats):
             player_stats[resource_fee]-=fee_price
             time.sleep(1)
             print("-",fee_price,resource_fee)
+            time.sleep(1)
+            print("* At least you made it out alive... *")
         case 2:        #Reason
             if coinFlip()=="Pass":
-                if bandits<player_stats["members"]:
+                if bandits<player_stats["members"]: #if the player has more members than there are bandits
                     print("PASS")
                     time.sleep(1)
                     print("* The Bandits hear you out and realise they're outnumbered *")
-                else:
+                else:   #if the player has fewer members than there are bandits
                     print("PASS")
                     time.sleep(1)
                     print("The Bandits: Man you're good at reasoning...")
@@ -115,19 +117,19 @@ def bandit_encounter (player_stats):
                 time.sleep(1)
                 print("The Bandits: Who do you think you are?")
                 time.sleep(1)
-                playsound("../sounds/gun2.mp3")
-                if player_stats["ammo"]>=10:
+                playsound("../sounds/gun2.mp3")     #gun fight ensues if the player fils the coin flip
+                if player_stats["ammo"]>=10:    #if the player has 10 or more ammo
                     player_stats["ammo"] -= 10
                     player_stats["members"] -= 2
                     gameover(player_stats)
                     print("-10 ammo, -2 members")
                     time.sleep(1)
                     print("*",player_stats["members"],"members left... *")
-                else:
+                else:   #if the player has less than 10 ammo they cannot fight back
                     print("-10 members")
                     gameover(player_stats)
         case 3:         #Fight
-            if player_stats["ammo"]>=20:
+            if player_stats["ammo"]>=20:    #if the player has more than 20 ammo
                 playsound("../sounds/gun1.mp3")
                 print("*You command your group to open fire on the bandits*")
                 if coinFlip()=="Pass":
@@ -144,7 +146,7 @@ def bandit_encounter (player_stats):
                     player_stats["members"] -= 4
                     time.sleep(1)
                     print("*",player_stats["members"],"member(s) left... *")
-            else:
+            else:       #if the player has less than 20 ammo
                 print("* You command your group to charge at the bandits... *")
                 time.sleep(1)
                 print("* You begin to remember an old saying from before all of this *")
