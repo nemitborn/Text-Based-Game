@@ -8,7 +8,7 @@ player_stats={
     "food":400,
     "ammo":400,
     "fuel":400,
-    "members":1,
+    "members":50,
     "trust":6,
     "morale":5,
     "rep":5
@@ -27,7 +27,7 @@ def random_loot(player_stats):  #this function generates and adds random loot, u
 def clear_screen():
     #clears the screen
     os.system("cls" if os.name == "nt" else "clear")
-def merchant_shop(player_stats):    #a seperate function for the merchant shop
+def merchant_shop(player_stats):    #a separate function for the merchant shop
     print("* The merchant lays out their goods... *")
     time.sleep(1)
     while True: #Always initiates the loop
@@ -47,7 +47,7 @@ def merchant_shop(player_stats):    #a seperate function for the merchant shop
                 time.sleep(1)
                 print("*The Merchant: Aha, a jokester I see. Alright now, lets do some actual trading *")
                 continue    #loops back to the start
-            if player_stats[give] < 3:  #if the player does not have enough to trade
+            if player_stats[give] < 10:  #if the player does not have enough to trade
                 print("* You don't have enough ",give," to make that trade... *")
                 continue    #loops back to the start
 
@@ -112,7 +112,7 @@ def bandit_encounter (player_stats):
                     print("The Bandits: Man you're good at reasoning...")
                 time.sleep(1)
                 print("The Bandits: I guess we can make an exception for you... go on through")
-            elif coinFlip()=="Fail":
+            else:
                 print("FAIL")
                 time.sleep(1)
                 print("The Bandits: Who do you think you are?")
@@ -247,7 +247,7 @@ def creature(player_stats):
                 print("*", player_stats["members"], "members left... *")
                 time.sleep(1)
                 player_stats["morale"]-=2
-                player_stats["trust"]-=2  # was "trusts" - that key doesn't exist in player_stats
+                player_stats["trust"]-=2
                 print("* The rest of your group sees your actions and fear for their own lives... *")
         case 2:
             time.sleep(1)
@@ -330,7 +330,7 @@ def blockade(player_stats):
                         print("-30 ammo")
                         print("*",player_stats["members"],"member(s) left... *")
                 else:
-                    # No ammo to fight back with - the ambush just costs you members
+                    # No ammo to fight back with
                     print("* You have no ammo to fight back with... *")
                     time.sleep(1)
                     player_stats["members"]-=8
@@ -440,7 +440,7 @@ def supply(player_stats):
         print("* You find comfort in the fact you still got something for free in this world... *")
         time.sleep(2)
     print("+ 20 ammo")
-    player_stats["ammo"]-=20
+    player_stats["ammo"]+=20
 def speech(player_stats):
     print("* As your group marches through the snow, you can tell their morale is low... *")
     time.sleep(1)
