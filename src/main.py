@@ -2,6 +2,7 @@ import time
 import random
 import ascii_art
 import encounters
+import ending
 
 player_stats = encounters.player_stats      #as the dictionary containing all the player's stats is repeated and printed a lot, I have put them in a variable to simplify development
 encounter_pool = [      #a list of all the encounters that the player could face, does not include processes in encounter.py
@@ -63,7 +64,7 @@ encounters.clear_screen()   #clears the screen
 print(ascii_art.titleCard)    #wow, cool title card
 time.sleep(5)
 encounters.clear_screen()   #clears the title card
-choice = input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n>>").lower()
+choice = input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n>> ").lower()
 time.sleep(1)
 if choice.startswith("y") or choice.endswith("es"):
     tutorial()
@@ -79,7 +80,7 @@ else:
     print("\npshh okay you lil expert") #funny
     time.sleep(2)
 
-for day in range(0, 10): #10 total days
+for day in range(0, 1): #10 total days
     encounters.clear_screen()
     print(      #prints out the stats the player currently has
         "FOOD:",player_stats["food"],
@@ -88,7 +89,7 @@ for day in range(0, 10): #10 total days
         "\nTRUST:",player_stats["trust"],
         "\nMORALE:",player_stats["morale"]      #Members not included as the member count will be printed is some other encounters
     )       #Reputation is not included as it's meant to be hidden
-    print("========== DAY " + str(day) + " of 20 ==========")       #Displays the current day
+    print("========== DAY " + str(day) + " of 10 ==========")       #Displays the current day
     input("Press ENTER to continue...")
 
     for i in range(0,3): #3 encounters a day
@@ -101,9 +102,5 @@ for day in range(0, 10): #10 total days
     encounters.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
 #END OF GAME (after 10 days has passed)
 encounters.clear_screen()
-print("* 20 days have passed wowowowowo you won... *") #ADD THE ENDING
-time.sleep(1)
-print("* " + str(player_stats["members"]) + " member(s) survived the journey *")    #Displays the remaining members left in your group
-time.sleep(2)
-input("press ENTER to exit...")
+ending.arrival(player_stats)
 exit()
