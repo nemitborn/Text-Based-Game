@@ -29,6 +29,17 @@ def arrival(player_stats):  # the scene every player sees, no matter which endin
     print("The Warden: STOP THERE. State your business.", )
     final_screen(player_stats)
 
+def low_morale(player_stats):
+    clear_screen()
+
+def high_spirits(player_stats):
+    clear_screen()
+
+def low_reputation(player_stats):
+    clear_screen()
+def normal_ending(player_stats):
+    clear_screen()
+
 
 def final_screen(player_stats):  # summary of the run, shown for every ending
     time.sleep(1)
