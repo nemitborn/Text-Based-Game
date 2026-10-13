@@ -1,7 +1,6 @@
 import time
 import os
 import encounters
-
 player_stats=encounters.player_stats
 def clear_screen():
     #clears the screen
@@ -20,28 +19,160 @@ def arrival(player_stats):  # the scene every player sees, no matter which endin
         print("* A small huddle of survivors stands behind you, too tired to speak *", )
     else:
         print("* Behind you, a long line of survivors stretches back into the snow *", )
-    if (player_stats["food"] < 50 and player_stats["ammo"] < 50
-            and player_stats["fuel"] < 50):
+    if player_stats["food"] < 50 and player_stats["ammo"] < 50 and player_stats["fuel"] < 50:
         print("* You've nothing left in your packs. You made it here on willpower alone... *", )
     time.sleep(1)
-    print("* Someone on the wall raises a rifle... then slowly lowers it *", )
+    print("* Someone on the wall raises a rifle*", )
     time.sleep(1)
-    print("The Warden: STOP THERE. State your business.", )
-    final_screen(player_stats)
 
-def low_morale(player_stats):
+#bad endings
+def SG(player_stats): #only when morale<3
     clear_screen()
+    time.sleep(1)
+    print("* Your voice sounds like cracked soil in a drought *")
+    time.sleep(1)
+    print("You: Please... Shelter...")
+    time.sleep(1)
+    print("* The guard orders someone to open the gates *")
+    time.sleep(1)
+    print("* As the heavy metal doors swing open, your group shuffles inside... *")
+    time.sleep(1)
+    print("* No one utters a word to you, too much has been lost... *")
+    time.sleep(1)
+    print("* As you make your way in, you notice everyone's eyes are void of their fighting spirits... *")
+    time.sleep(1)
+    print("* You live with the consciousness that so many were lost just to get you to safety... *")
+    time.sleep(1)
+    print("* Why them and not you? *")
+    time.sleep(1)
+    print("========== ENDING: SURVIVOR'S GUILT ==========")
+    time.sleep(1)
+    input("Press enter to continue...")
+    final_score(player_stats)
 
-def high_spirits(player_stats):
+def INFAMY(player_stats):   #only possible when rep<3
     clear_screen()
+    time.sleep(1)
+    print("* Your raise your voice *")
+    time.sleep(1)
+    print("You: DON'T SHOOT! WE'RE FRIENDLY!")
+    time.sleep(1)
+    print("Guard: Tch, like we haven't heard that before. We know who you are.")
+    time.sleep(1)
+    print("* He orders for reinforcements... *")
+    time.sleep(1)
+    print("* As more rifles are raised against your group, you begin to realise...  *")
+    time.sleep(1)
+    print("* The Road remembers your sins... *")
+    time.sleep(1)
+    print("* You took advantage of people, but at what cost?... *")
+    time.sleep(1)
+    print("* Brutality is not the way. *")
+    time.sleep(1)
+    print("========== ENDING: INFAMY ==========")
+    time.sleep(1)
+    input("Press enter to continue...")
+    final_score(player_stats)
 
-def low_reputation(player_stats):
+def RETUBUTION(player_stats):        #only possible when trust<3
     clear_screen()
-def normal_ending(player_stats):
+    time.sleep(1)
+    print("* Your raise your voice *")
+    time.sleep(1)
+    print("You: DON'T SHOOT! WE'RE FRIENDLY!")
+    time.sleep(1)
+    print("Guard: Tch, You sure? Your group dont seem to take a liking to you...")
+    time.sleep(1)
+    print("* He orders for someone to open the gate... *")
+    time.sleep(1)
+    print("* As you try to get through one of your members speak up...  *")
+    time.sleep(1)
+    print("Member: Please guard... our leader is horrible, they will cause chaos in this camp...")
+    time.sleep(1)
+    print("* As some guards block you off from entering you realise...*")
+    time.sleep(1)
+    print("* You should have been kinder to those who trusted you. *")
+    time.sleep(1)
+    print("========== ENDING: RETRIBUTION ==========")
+    time.sleep(1)
+    input("Press enter to continue...")
+    final_score(player_stats)
+
+#good endings
+def HGL(player_stats):     #Only possible with both high morale and trust (more than or equal to 8)
     clear_screen()
+    time.sleep(1)
+    print("* Your voice sounds like a gong in an echo chamber...*")
+    time.sleep(1)
+    print("You: DON'T SHOOT! WE'RE FRIENDLY!")
+    time.sleep(1)
+    print("* The guard lowers down his rifle and studies you*")
+    time.sleep(1)
+    print("* He orders someone to open the gates for your group... *")
+    time.sleep(1)
+    print("* As the heavy metal doors swing open, your group lifts you up and carries you inside...  *")
+    time.sleep(1)
+    print("* As your group enters, everyone begins to chant your name... *")
+    time.sleep(1)
+    print("* You are a great leader. *")
+    time.sleep(1)
+    print("* Those who sacrificed everything were not left in vain. *")
+    time.sleep(1)
+    print("========== ENDING: HISTORY'S GREATEST LEADER ==========")
+    time.sleep(1)
+    input("Press enter to continue...")
+    final_score(player_stats)
 
+def SAINT(player_stats): #only when rep>7
+    clear_screen()
+    time.sleep(1)
+    print("* Your voice booms across the sky... *")
+    time.sleep(1)
+    print("You: DON'T SHOOT! WE'RE FRIENDLY!")
+    time.sleep(1)
+    print("* The guard instantly lowers down his rifle, as if he recognises you... *")
+    time.sleep(1)
+    print("* He orders someone to open the gates for your group... *")
+    time.sleep(1)
+    print("*Guard: We have heard of you... The Road knows your name. Please, take shelter inside...  *")
+    time.sleep(1)
+    print("* As your group enters, everyone begins to chant your name... *")
+    time.sleep(1)
+    print("* You are a good person. *")
+    time.sleep(1)
+    print("* Those who sacrificed everything were not left in vain. *")
+    time.sleep(1)
+    print("========== ENDING: THE SAINT ==========")
+    time.sleep(1)
+    input("Press enter to continue...")
+    final_score(player_stats)
 
-def final_screen(player_stats):  # summary of the run, shown for every ending
+def NORMAL(player_stats):        #if none of the conditions are met then this is the regular ending
+    clear_screen()
+    time.sleep(1)
+    print("* Your voice raises to a shout*")
+    time.sleep(1)
+    print("You: DON'T SHOOT! WE'RE FRIENDLY!")
+    time.sleep(1)
+    print("* The guard lowers down his rifle and studies you*")
+    time.sleep(1)
+    print("* He orders someone to open the gates for your group... *")
+    time.sleep(1)
+    print("* As the heavy metal doors swing open, your group is taken into a solid concrete room... *")
+    time.sleep(1)
+    print("* As your group enters, each person is taken aside and questioned... *")
+    time.sleep(1)
+    print("* You served your purpose. *")
+    time.sleep(1)
+    print("* You could not have made it without your group. *")
+    time.sleep(1)
+    print("========== ENDING: NORMAL ==========")
+    time.sleep(1)
+    input("Press enter to continue...")
+    final_score(player_stats)
+
+# FINAL SCREEN
+def final_score(player_stats):  # summary of the run, shown for every ending
     time.sleep(1)
     clear_screen()
     print("========== YOUR JOURNEY ==========")
@@ -57,4 +188,14 @@ def final_screen(player_stats):  # summary of the run, shown for every ending
     time.sleep(3)
     print("\nMEMENTO VIVERE")  # mirrors the "MEMENTO MORI" on the game over screen
     time.sleep(2)
-    print("\nYou live to die another day...")
+    print("\nIt doesn't have to end like this...")
+    time.sleep(1)
+    print("Maybe if your actions were different, your fate would change")
+    time.sleep(5)
+    exit()
+
+
+#ENDING SELECTION
+#The end is selected using player_stats, good endings are checked first
+
+if player_stats["trust"]>8 and player_stats["trust"]>8
