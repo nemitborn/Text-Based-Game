@@ -3,6 +3,7 @@ import random
 import ascii_art
 import encounters
 import ending
+import processes
 
 player_stats = encounters.player_stats      #as the dictionary containing all the player's stats is repeated and printed a lot, I have put them in a variable to simplify development
 encounter_pool = [      #a list of all the encounters that the player could face, does not include processes in encounter.py
@@ -18,7 +19,7 @@ encounter_pool = [      #a list of all the encounters that the player could face
 ]
 
 def age_check():        #Checks to see if the player is 16+
-    encounters.clear_screen()
+    processes.clear_screen()
     print("FULL SCREEN FOR THIS GAME TO WORK")      #needed for the ASCII art to display correctly
     time.sleep(2)
     input("\npress ENTER to continue...")
@@ -60,10 +61,10 @@ def tutorial():
 #INTRO
 age_check() #firstly checks the age
 
-encounters.clear_screen()   #clears the screen
+processes.clear_screen()   #clears the screen
 print(ascii_art.titleCard)    #wow, cool title card
 time.sleep(5)
-encounters.clear_screen()   #clears the title card
+processes.clear_screen()   #clears the title card
 choice = input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n>> ").lower()
 time.sleep(1)
 if choice.startswith("y") or choice.endswith("es"):
@@ -81,7 +82,7 @@ else:
     time.sleep(2)
 
 for day in range(0, 1): #10 total days
-    encounters.clear_screen()
+    processes.clear_screen()
     print(      #prints out the stats the player currently has
         "FOOD:",player_stats["food"],
         "\nAMMO:",player_stats["ammo"],
@@ -99,8 +100,7 @@ for day in range(0, 1): #10 total days
         encounters.gameover(player_stats)  #actively checks if the player has less than 0 members after every encounter
         time.sleep(1)
         input("\nPress ENTER to continue...")
-    encounters.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
+    processes.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
 #END OF GAME (after 10 days has passed)
-encounters.clear_screen()
+processes.clear_screen()
 ending.arrival(player_stats)
-exit()
