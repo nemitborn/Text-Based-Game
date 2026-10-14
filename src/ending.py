@@ -1,13 +1,13 @@
 import time
 import os
-import encounters
-player_stats=encounters.player_stats
+import player_stats
+player_stats=player_stats.player_stats
 def clear_screen():
     #clears the screen
     os.system("cls" if os.name == "nt" else "clear")
 
 def say(text):      #This function was to simplify the printing process, this prevents me from repeating time.sleep after every print
-    say(text)
+    print(text)
     time.sleep(1)
 
 def arrival(player_stats):  # the scene every player sees, no matter which ending they get, also determines which ending the player gets
@@ -24,6 +24,7 @@ def arrival(player_stats):  # the scene every player sees, no matter which endin
     if player_stats["food"] < 50 and player_stats["ammo"] < 50 and player_stats["fuel"] < 50:
         say("* You've nothing left in your packs. You made it here on willpower alone... *")
     say("* Someone on the wall raises a rifle*")
+    input("Press enter to continue...")
     #ENDING SELECTION
     if player_stats["trust"]>=8 and player_stats["morale"]>=8:
         HGL(player_stats)
