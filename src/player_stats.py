@@ -1,0 +1,9 @@
+player_stats={
+    "food":400,
+    "ammo":400,
+    "fuel":400,
+    "members":50,
+    "trust":5,
+    "morale":5,
+    "rep":5
+    }
