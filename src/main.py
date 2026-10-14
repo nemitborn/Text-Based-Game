@@ -4,8 +4,9 @@ import ascii_art
 import encounters
 import ending
 import processes
+import player_stats
 
-player_stats = encounters.player_stats      #as the dictionary containing all the player's stats is repeated and printed a lot, I have put them in a variable to simplify development
+player_stats = player_stats.player_stats      #as the dictionary containing all the player's stats is repeated and printed a lot, I have put them in a variable to simplify development
 encounter_pool = [      #a list of all the encounters that the player could face, does not include processes in encounter.py
     encounters.bandit_encounter,
     encounters.storm,
@@ -66,7 +67,6 @@ print(ascii_art.titleCard)    #wow, cool title card
 time.sleep(5)
 processes.clear_screen()   #clears the title card
 choice = input("Welcome to WINTER ROAD, would you like a tutorial to begin?\n>> ").lower()
-time.sleep(1)
 if choice.startswith("y") or choice.endswith("es"):
     tutorial()
     while True:     #constantly repeats the tutorial until the player says yes
@@ -78,10 +78,10 @@ if choice.startswith("y") or choice.endswith("es"):
         else:
             break
 else:
-    print("\npshh okay you lil expert") #funny
+    print("pshh okay you lil expert") #funny
     time.sleep(2)
 
-for day in range(0, 1): #10 total days
+for day in range(0, 7): #7 total days
     processes.clear_screen()
     print(      #prints out the stats the player currently has
         "FOOD:",player_stats["food"],
@@ -97,7 +97,7 @@ for day in range(0, 1): #10 total days
         print("\n--- Day " + str(day) + ", Encounter " + str(i + 1) + "/3 ---\n")
         encounter = random.choice(encounter_pool)   #selects a random encounter from the encounter pool and stores it
         encounter(player_stats) #calls the encounter and puts the player's stats in the parameters
-        encounters.gameover(player_stats)  #actively checks if the player has less than 0 members after every encounter
+        processes.gameover(player_stats)  #actively checks if the player has less than 0 members after every encounter
         time.sleep(1)
         input("\nPress ENTER to continue...")
     processes.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
