@@ -1,9 +1,10 @@
 import time
 import random
-import encounters
+import player_stats
 import os
 import ascii_art
-player_stats=encounters.player_stats()
+
+player_stats = player_stats.player_stats
 resource_types=["food","ammo","fuel"]
 
 def random_loot(player_stats):  #this function generates and adds random loot, used in a lot of encounters
