@@ -1,7 +1,7 @@
 import time
 import os
-import player_stats
-player_stats=player_stats.player_stats
+import inventory
+player_stats=inventory.player_stats
 def clear_screen():
     #clears the screen
     os.system("cls" if os.name == "nt" else "clear")
