@@ -53,8 +53,6 @@ def tutorial():
     input()
     print("Some encounters will require you to choose the correct side on a coinflip")
     input()
-    print("The coin flip only works with specific spelling, typing 'head' when you want to choose heads will cause you to fail the coin flip")
-    input()
     print("Failing the coin flip will cause your group faces consequences, passing it means you'll get a favourable outcome")
     input()
 
@@ -94,13 +92,23 @@ for day in range(0, 7): #7 total days
     )       #Reputation is not included as it's meant to be hidden
     print("========== DAY " + str(day) + " of 7 ==========")       #Displays the current day
     input("Press ENTER to continue...")
-
     for i in range(0,3): #3 encounters a day
-        print("\n--- Day " + str(day) + ", Encounter " + str(i + 1) + "/3 ---\n")
+        print("\n--- Day " + str(day) + ", Encounter " + str(i+1) + "/3 ---\n")
         encounter = random.choice(encounter_pool)   #selects a random encounter from the encounter pool and stores it
         encounter(current_stats) #calls the encounter and puts the player's stats in the parameters
         processes.gameover(current_stats)  #actively checks if the player has less than 0 members after every encounter
         time.sleep(1)
+        print("* Your group decides to eat before they continue *")
+        time.sleep(1)
+        current_stats["food"]-=current_stats["members"]
+        print("-",current_stats["members"],"food")
+        if current_stats["food"] <= 0 or current_stats["fuel"] <= 0:
+            current_stats["members"] -= 2
+            time.sleep(1)
+            print("* You can feel your group suffering, you are running out of supplies *")
+            time.sleep(1)
+            print("-2 members")
+            processes.gameover(current_stats)
         input("\nPress ENTER to continue...")
     processes.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
 
