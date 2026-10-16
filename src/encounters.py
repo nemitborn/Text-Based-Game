@@ -54,6 +54,7 @@ def bandit_encounter (player_stats):
                     print("*",player_stats["members"],"members left... *")
                 else:   #if the player has less than 10 ammo they cannot fight back
                     print("-10 members")
+                    player_stats["members"]-=10
                     processes.gameover(player_stats)
         case 3:         #Fight
             if player_stats["ammo"]>=20:    #if the player has more than 20 ammo
@@ -63,14 +64,16 @@ def bandit_encounter (player_stats):
                     print("PASS")
                     time.sleep(1)
                     print("* You take no casualties, it seems these were just lowly bandits *")
+                    time.sleep(1)
+                    player_stats["ammo"]-=20
                 else:
                     print("FAIL")
                     time.sleep(1)
                     print("* You take casualties, 4 of your members are lost to these lowly bandits... *")
                     time.sleep(1)
                     print("-20 ammo         -4 members")
-                    player_stats["ammo"] -= 20
-                    player_stats["members"] -= 4
+                    player_stats["ammo"]-=20
+                    player_stats["members"]-=4
                     time.sleep(1)
                     print("*",player_stats["members"],"member(s) left... *")
             else:       #if the player has less than 20 ammo
@@ -346,6 +349,47 @@ def merchant_encounter(player_stats):
                 print("* You feel as if you've commited a great sin, how can anyone look at you the same... *")
         case "3":
             print("* You decide against it and walk away... *")
+
+
+def butcher(player_stats):
+    print("* The butcher lays out their raw meats... *")
+    time.sleep(1)
+    while True:
+        print("\n--- Butcher's Shop ---")
+        for stat in resource_types:
+            print(stat.capitalize(), ": ", str(player_stats[stat]))
+        print("\nTrade rate: 10 of ammo or fuel for 8 food")
+        choice = input("What would you like to do?\n 1. Trade for food          2. Recruit the butcher          3. Leave\n")
+        if choice == "1":
+            give = input("What do you want to give up? (ammo, fuel)\n").lower()
+            if give not in ["ammo", "fuel"]:
+                print("* The Butcher: I only take ammo or fuel for my meat. *")
+                continue
+            if player_stats[give] < 10:
+                print("* You don't have enough ", give, " to make that trade... *")
+                continue
+
+            player_stats[give] -= 10
+            player_stats["food"] += 8
+            print("* You trade 10 ", give, " for 8 food *")
+            time.sleep(1)
+        elif choice == "2":
+            if "butcher_recruited" in player_stats and player_stats["butcher_recruited"]:
+                print("* The butcher is already traveling with you! *")
+                time.sleep(1)
+                continue
+            
+            print("* You ask the butcher if he wants to join your journey. *")
+            time.sleep(1)
+            print("* The Butcher: Beats staying out here alone. Let's pack up. *")
+            time.sleep(1)
+            player_stats["members"] += 1
+            player_stats["butcher_recruited"] = True
+            print("+1 member")
+            time.sleep(1)
+        else:
+            print("* You thank the butcher and continue on your way... *")
+            break
 
 #positive encounters
 def supply(player_stats):
