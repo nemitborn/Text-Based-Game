@@ -4,9 +4,9 @@ import ascii_art
 import encounters
 import ending
 import processes
-import player_stats
+import inventory
 
-player_stats = player_stats.player_stats      #as the dictionary containing all the player's stats is repeated and printed a lot, I have put them in a variable to simplify development
+current_stats = inventory.player_stats      #as the dictionary containing all the player's stats is repeated and printed a lot, I have put them in a variable to simplify development
 encounter_pool = [      #a list of all the encounters that the player could face, does not include processes in encounter.py
     encounters.bandit_encounter,
     encounters.storm,
@@ -81,26 +81,29 @@ else:
     print("pshh okay you lil expert") #funny
     time.sleep(2)
 
+
+#MAIN GAME LOOP
 for day in range(0, 7): #7 total days
     processes.clear_screen()
     print(      #prints out the stats the player currently has
-        "FOOD:",player_stats["food"],
-        "\nAMMO:",player_stats["ammo"],
-        "\nFUEL:",player_stats["fuel"],
-        "\nTRUST:",player_stats["trust"],
-        "\nMORALE:",player_stats["morale"]      #Members not included as the member count will be printed is some other encounters
+        "FOOD:",current_stats["food"],
+        "\nAMMO:",current_stats["ammo"],
+        "\nFUEL:",current_stats["fuel"],
+        "\nTRUST:",current_stats["trust"],
+        "\nMORALE:",current_stats["morale"]      #Members not included as the member count will be printed is some other encounters
     )       #Reputation is not included as it's meant to be hidden
-    print("========== DAY " + str(day) + " of 10 ==========")       #Displays the current day
+    print("========== DAY " + str(day) + " of 7 ==========")       #Displays the current day
     input("Press ENTER to continue...")
 
     for i in range(0,3): #3 encounters a day
         print("\n--- Day " + str(day) + ", Encounter " + str(i + 1) + "/3 ---\n")
         encounter = random.choice(encounter_pool)   #selects a random encounter from the encounter pool and stores it
-        encounter(player_stats) #calls the encounter and puts the player's stats in the parameters
-        processes.gameover(player_stats)  #actively checks if the player has less than 0 members after every encounter
+        encounter(current_stats) #calls the encounter and puts the player's stats in the parameters
+        processes.gameover(current_stats)  #actively checks if the player has less than 0 members after every encounter
         time.sleep(1)
         input("\nPress ENTER to continue...")
     processes.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
+
 #END OF GAME (after 10 days has passed)
 processes.clear_screen()
-ending.arrival(player_stats)
+ending.arrival(current_stats)
