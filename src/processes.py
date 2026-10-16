@@ -45,6 +45,7 @@ def coinFlip():
     if player_side in ["head", "tail"]:
         player_side+="s"
     #checks if the side the player chose matches to the side the player
+    playsound("sounds/coin.mp3")
     print("* The coin landed on", side, "*")
     time.sleep(1)
     if player_side==side:
