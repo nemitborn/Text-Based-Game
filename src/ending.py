@@ -1,5 +1,7 @@
 import time
 import os
+
+import ascii_art
 import inventory
 player_stats=inventory.player_stats
 def clear_screen():
@@ -35,7 +37,7 @@ def arrival(player_stats):  # the scene every player sees, no matter which endin
     elif player_stats["rep"]<=3:
         INFAMY(player_stats)
     elif player_stats["trust"]<=3:
-        RETUBUTION(player_stats)
+        RETRUBUTION(player_stats)
     else:
         NORMAL(player_stats)
 
@@ -68,7 +70,7 @@ def INFAMY(player_stats):   #only possible when rep<3
     input("Press enter to continue...")
     final_score(player_stats)
 
-def RETUBUTION(player_stats):        #only possible when trust<3
+def RETRUBUTION(player_stats):        #only possible when trust<3
     clear_screen()
     say("* Your raise your voice *")
     say("You: DON'T SHOOT! WE'RE FRIENDLY!")
@@ -138,7 +140,7 @@ def final_score(player_stats):  # summary of the run, shown for every ending
     print("Fuel       :", player_stats["fuel"])
     print("==================================")
     time.sleep(3)
-    say("\nMEMENTO VIVERE")  # mirrors the "MEMENTO MORI" on the game over screen
+    print(ascii_art.Ending_quote)  # cool quote number 2
     time.sleep(2)
     say("\nIt doesn't have to end like this...")
     say("Maybe if your actions were different, your fate would change")
