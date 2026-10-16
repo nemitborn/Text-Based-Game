@@ -102,13 +102,15 @@ for day in range(0, 7): #7 total days
         time.sleep(1)
         current_stats["food"]-=current_stats["members"]
         print("-",current_stats["members"],"food")
-        if current_stats["food"] <= 0 or current_stats["fuel"] <= 0:
-            current_stats["members"] -= 2
+        if current_stats["food"]<=0 or current_stats["fuel"]<=0:
+            current_stats["members"]-=2
             time.sleep(1)
             print("* You can feel your group suffering, you are running out of supplies *")
             time.sleep(1)
             print("-2 members")
             processes.gameover(current_stats)
+            time.sleep(1)
+            print("-1 morale")
         input("\nPress ENTER to continue...")
     processes.clear_screen()   #clears the screen after every day has passed to prevent screen clutter
 
