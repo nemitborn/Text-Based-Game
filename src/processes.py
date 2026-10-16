@@ -3,6 +3,8 @@ import random
 import inventory
 import os
 import ascii_art
+from playsound3 import playsound
+
 
 current_stats=inventory.player_stats
 resource_types=["food","ammo","fuel"]
@@ -25,9 +27,14 @@ def gameover(current_stats):     #This is a function that checks if the player h
         print("* You have led your team to their death... *")
         time.sleep(1)
         print(ascii_art.GameOver)
+        time.sleep(1)
+        input("Press enter to continue...")
+        clear_screen()
+        print(ascii_art.GameOver_quote)       #cool quote
         time.sleep(5)
-        print("MEMENTO MORI")       #cool quote
-        time.sleep(2)
+        clear_screen()
+        print(ascii_art.skulls)
+        playsound("sounds/storm.mp3")
         exit()  #close the game
 def coinFlip():
     coin=["heads", "tails"]
@@ -148,3 +155,4 @@ def butcher_shop(current_stats):
         else:
             print("* You thank the butcher and continue on your way... *")
             break
+gameover(current_stats)
